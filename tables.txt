@@ -1,0 +1,75 @@
+CREATE TABLE Team (TeamID INT PRIMARY KEY, TeamName VARCHAR(255));
+
+CREATE TABLE Cuser (ID INT PRIMARY KEY, Username VARCHAR(255) UNIQUE, Password VARCHAR(255), Name VARCHAR(255), TeamID INT, Email VARCHAR(255), FOREIGN KEY (TeamID) REFERENCES Team(TeamID));
+
+CREATE TABLE Player (PlayerID INT PRIMARY KEY, TeamID INT, Name VARCHAR(255), Age INT, Position VARCHAR(255), Nation VARCHAR(255), JerseyNo INT, Overall INT, FOREIGN KEY (TeamID) REFERENCES Team(TeamID));
+
+CREATE TABLE Matches (MatchID INT PRIMARY KEY, Team1ID INT, Team2ID INT, Team1Score INT, Team2Score INT, Highlights VARCHAR(1000), FOREIGN KEY (Team1ID) REFERENCES Team(TeamID), FOREIGN KEY (Team2ID) REFERENCES Team(TeamID));
+
+
+
+CREATE OR REPLACE TRIGGER manager_id_trigger
+BEFORE INSERT ON Manager
+FOR EACH ROW
+DECLARE
+    last_id INT;
+BEGIN
+    SELECT MAX(ID) INTO last_id FROM Manager;
+   
+    IF last_id IS NULL THEN
+        :new.ID := 1;
+    ELSE
+        :new.ID := last_id + 1;
+    END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER team_id_trigger
+BEFORE INSERT ON Team
+FOR EACH ROW
+DECLARE
+    last_id INT;
+BEGIN
+    SELECT MAX(TeamID) INTO last_id FROM Team;
+   
+    IF last_id IS NULL THEN
+        :new.TeamID := 1;
+    ELSE
+        :new.TeamID := last_id + 1;
+    END IF;
+END;
+/
+
+
+CREATE OR REPLACE TRIGGER player_id_trigger
+BEFORE INSERT ON Player
+FOR EACH ROW
+DECLARE
+    last_id INT;
+BEGIN
+    SELECT MAX(PlayerID) INTO last_id FROM Player;
+   
+    IF last_id IS NULL THEN
+        :new.PlayerID := 1;
+    ELSE
+        :new.PlayerID := last_id + 1;
+    END IF;
+END;
+/
+
+
+CREATE OR REPLACE TRIGGER matches_id_trigger
+BEFORE INSERT ON Matches
+FOR EACH ROW
+DECLARE
+    last_id INT;
+BEGIN
+    SELECT MAX(MatchID) INTO last_id FROM Matches;
+   
+    IF last_id IS NULL THEN
+        :new.MatchID := 1;
+    ELSE
+        :new.MatchID := last_id + 1;
+    END IF;
+END;
+/

@@ -73,3 +73,8 @@ BEGIN
     END IF;
 END;
 /
+
+
+host: reva
+Service name: SYS$USERS
+Port: 5560

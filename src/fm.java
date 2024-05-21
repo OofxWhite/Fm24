@@ -316,7 +316,7 @@ public class fm extends Application
         MyTeamTop.setSpacing(10);
         MyTeamTop.setAlignment(Pos.CENTER_RIGHT);
 
-        Label TeamName=new Label("Vibes FC Manipal");
+        Label TeamName=new Label("FC Barcelona");
         TeamName.setFont(Font.font("Comic Sans MS",FontWeight.BOLD,30));
         TeamName.setTextAlignment(TextAlignment.CENTER);
         TeamName.setStyle("-fx-text-fill: black;");
@@ -1839,7 +1839,7 @@ public class fm extends Application
             {    
                 mainStage.close();
                 SettingsStage.show();
-                try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin: <jdbc location>", "username", "password")) 
+                try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:reva", "SYSTEM", "Oofx")) 
                 {
                     String sql = "SELECT * FROM Manager WHERE ID = ?";
                     PreparedStatement statement = connection.prepareStatement(sql);
@@ -1898,7 +1898,7 @@ public class fm extends Application
         {
             if (newValue != null) 
             {
-                try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin: <jdbc location>", "username", "password")) 
+                try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@//reva:5560/SYS$USERS", "SYSTEM", "Oofx")) 
                 {
                     String query = "SELECT * FROM player WHERE NAME = ? AND TEAMID = ?";
                     try (PreparedStatement statement = connection.prepareStatement(query)) 
